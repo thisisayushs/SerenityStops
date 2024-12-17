@@ -29,4 +29,8 @@ Step 2: Open the project in Xcode.
 
 Step 3: Run the app on the simulator or a connected device.
 
+## License
+
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
+
 
