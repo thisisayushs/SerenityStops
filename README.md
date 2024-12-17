@@ -15,7 +15,7 @@ Serenity Stops 🌿 is a mood-based journaling app that helps users reflect on t
 
 ## Technologies Used
 
-SwiftUI: Modern UI development for iOS.
+SwiftUI: Modern interface development for Apple Platforms.
 	
 MapKit: Displays serene stops on a map.
 	
