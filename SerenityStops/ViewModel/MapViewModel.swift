@@ -20,6 +20,13 @@ class MapViewModel: NSObject, ObservableObject, CLLocationManagerDelegate {
     /// The sentiment label derived from the location description
     @Published var sentimentLabel: String = ""
     
+    /// Added Alert Properties
+    @Published var showLocationAlert = false
+    @Published var alertTitle = ""
+    @Published var alertMessage = ""
+    
+    @Published var authorizationStatus: CLAuthorizationStatus = .notDetermined
+    
     // MARK: - Private Properties
     private let locationManager: CLLocationManager
     private let feedbackGenerator = UINotificationFeedbackGenerator()
@@ -38,6 +45,7 @@ class MapViewModel: NSObject, ObservableObject, CLLocationManagerDelegate {
         super.init()
         
         locationManager.delegate = self
+        authorizationStatus = locationManager.authorizationStatus
     }
     
     // MARK: - SwiftData Methods
@@ -73,11 +81,31 @@ class MapViewModel: NSObject, ObservableObject, CLLocationManagerDelegate {
         }
     }
     
+    /// Handles tap on location button when permission is denied
+    func handleLocationButtonTap() {
+        switch locationManager.authorizationStatus {
+        case .denied, .restricted:
+            alertTitle = "Location Access Required"
+            alertMessage = "Please enable location access in Settings to use this feature."
+            showLocationAlert = true
+            
+        case .notDetermined:
+            requestLocationPermission()
+            
+        case .authorizedWhenInUse, .authorizedAlways:
+            locationManager.startUpdatingLocation()
+            
+        @unknown default:
+            break
+        }
+    }
+    
     // MARK: - CLLocationManagerDelegate Methods
     
     /// Handles changes in location authorization status
     func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
-        switch manager.authorizationStatus {
+        authorizationStatus = manager.authorizationStatus
+        switch authorizationStatus {
         case .authorizedWhenInUse, .authorizedAlways:
             locationManager.startUpdatingLocation()
         default:

@@ -43,10 +43,10 @@ struct LocationSheet: View {
                 VStack(spacing: 12) {
                     Circle()
                         .foregroundStyle(Color.accentColor.opacity(0.1))
-                        .frame(width: 120, height: 120)
+                        .frame(width: 100, height: 100)
                         .overlay(
-                            Text(sentimentLabel.isEmpty ? "?" : sentimentLabel.components(separatedBy: " ").first ?? "?")
-                                .font(.system(.largeTitle, design: .rounded, weight: .medium))
+                            Text(sentimentLabel.isEmpty ? "💭" : sentimentLabel.components(separatedBy: " ").first ?? "💭")
+                                .font(.system(.body, design: .rounded, weight: .medium))
                                 .foregroundColor(.accentColor)
                                 .scaleEffect(1.0)
                                 .animation(
@@ -69,12 +69,12 @@ struct LocationSheet: View {
                 Text("How did you feel here?")
                     .font(.system(.title3, design: .rounded, weight: .semibold))
                 
-                TextField("", text: $locationDescription, prompt: Text("Share your feelings...").foregroundColor(.gray.opacity(0.7)))
+                TextField("", text: $locationDescription, prompt: Text("Share your feelings...").foregroundColor(.secondary.opacity(0.7)))
                     .font(.system(.body, design: .rounded))
                     .padding()
                     .background(
                         Capsule()
-                            .fill(Color(.systemGray6))
+                            .fill(Color(.secondarySystemBackground))
                     )
                     .padding(.horizontal)
                     .focused($isTextFieldFocused)

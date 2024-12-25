@@ -46,10 +46,11 @@ struct ContentView: View {
                     }
                 }
                 .mapStyle(.standard(elevation: .realistic))
-                
                 .mapControls {
-                    MapUserLocationButton()
-                    MapCompass()
+                    MapControlsView(
+                        authStatus: viewModel.authorizationStatus,
+                        onLocationTap: viewModel.handleLocationButtonTap
+                    )
                 }
                 
                 // MARK: - Tips View
@@ -78,6 +79,18 @@ struct ContentView: View {
                     ).transition(.move(edge: .bottom).combined(with: .opacity))
                         .animation(.easeInOut(duration: 0.5), value: viewModel.showLocationSheet)
                 }
+            }
+            // MARK: - Location Alert
+            .alert(viewModel.alertTitle,
+                   isPresented: $viewModel.showLocationAlert) {
+                Button("Open Settings") {
+                    if let settingsURL = URL(string: UIApplication.openSettingsURLString) {
+                        UIApplication.shared.open(settingsURL)
+                    }
+                }
+                Button("Cancel", role: .cancel) {}
+            } message: {
+                Text(viewModel.alertMessage)
             }
         }
         // MARK: - Lifecycle Methods
