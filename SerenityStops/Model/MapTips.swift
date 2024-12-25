@@ -14,6 +14,9 @@ import TipKit
 
 struct MapTapTip: Tip {
     
+    // MARK: - Tip Events
+    static let mapTipDisplayed = Event(id: "mapTipDisplayed")
+    
     // MARK: - Tip Content
     
     /// The main title of the tip
@@ -27,4 +30,24 @@ struct MapTapTip: Tip {
         
     }
 }
-// End of file
+
+/// A tip that shows how to delete annotations
+/// This tip appears after the user creates their first annotation
+struct DeleteAnnotationTip: Tip {
+    // MARK: - Tip Content
+    
+    /// The main title of the tip
+    var title: Text {
+        Text("Delete Annotations")
+    }
+    
+    /// Additional explanatory message for the tip
+    var message: Text? {
+        Text("Press and hold any annotation to delete it")
+    }
+    
+    /// Rules for when this tip should be displayed
+    var rules: [Rule] {
+        [#Rule(MapTapTip.mapTipDisplayed) { $0.donations.count > 0 }]
+    }
+}

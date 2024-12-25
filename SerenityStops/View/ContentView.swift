@@ -55,8 +55,16 @@ struct ContentView: View {
                 
                 // MARK: - Tips View
                 VStack {
-                    TipView(MapTapTip())
-                        .padding()
+                    if viewModel.annotations.isEmpty {
+                        TipView(MapTapTip())
+                            .padding()
+                            .task {
+                                await MapTapTip.mapTipDisplayed.donate()
+                            }
+                    } else if viewModel.annotations.count == 1 {
+                        TipView(DeleteAnnotationTip())
+                            .padding()
+                    }
                     Spacer()
                 }
             }
