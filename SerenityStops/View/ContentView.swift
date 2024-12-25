@@ -40,7 +40,7 @@ struct ContentView: View {
                             MapAnnotationView(
                                 annotation: annotation,
                                 index: index,
-                                onDelete: { viewModel.annotations.remove(at: index) }
+                                onDelete: { viewModel.deleteAnnotation(at: index) }
                             )
                         }
                     }

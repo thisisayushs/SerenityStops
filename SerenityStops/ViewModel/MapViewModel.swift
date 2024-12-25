@@ -139,4 +139,37 @@ class MapViewModel: NSObject, ObservableObject, CLLocationManagerDelegate {
         showLocationSheet = false
             
     }
+    
+    // MARK: - Deletion Method
+    
+    /// Deletes an annotation from both the UI and persistent storage
+    /// - Parameter index: The index of the annotation to delete
+    func deleteAnnotation(at index: Int) {
+        guard let context = modelContext else { return }
+        
+        let annotationToDelete = annotations[index]
+        annotations.remove(at: index)
+        
+        let lat = annotationToDelete.coordinate.latitude
+        let lon = annotationToDelete.coordinate.longitude
+        
+        // Find and delete the matching LocationStore object
+        do {
+            let descriptor = FetchDescriptor<LocationStore>()
+            let storedLocations = try context.fetch(descriptor)
+            
+            // Find and delete matching location
+            for location in storedLocations {
+                if location.latitude == lat && location.longitude == lon {
+                    context.delete(location)
+                }
+            }
+            
+            try context.save()
+            feedbackGenerator.notificationOccurred(.success)
+        } catch {
+            print("Error deleting location: \(error)")
+            feedbackGenerator.notificationOccurred(.error)
+        }
+    }
 }
