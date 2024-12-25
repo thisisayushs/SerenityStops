@@ -21,20 +21,20 @@ class Analyzer {
     /// - Returns: A string containing an emoji and sentiment description
     func sentimentString(from sentimentScore: Double) -> String {
         switch sentimentScore {
-        case 0.5...1.0:
+        case 0.8...1.0:
+            return "✨ Euphoric"
+        case 0.5...0.8:
             return "🌸 Joyful"
-            
         case 0.2...0.5:
             return "🌼 Content"
-            
         case -0.2...0.2:
             return "🌿 Neutral"
-            
-        case -0.5...0.2:
-            return "🌿 Reflective"
-            
-        case -1.0...0.5:
-            return "🍂 Stressed"
+        case -0.5 ... -0.2:
+            return "🍂 Reflective"
+        case -0.8 ... -0.5:
+            return "🌫️ Melancholic"
+        case -1.0 ... -0.8:
+            return "⛈️ Distressed"
         default:
             return ""
         }
@@ -72,6 +72,20 @@ class Analyzer {
         
         return sentimentEmoji
         
+    }
+    
+    /// Enhanced method to analyze text and provide more context
+    /// - Parameter text: The input text to analyze
+    /// - Returns: A tuple containing the sentiment label and intensity score
+    func analyzeEmotion(from text: String) -> (label: String, intensity: Double) {
+        var intensity = 0.0
+        let label = mapSentiment(from: text)
+        
+        if let score = getSentimentScore(from: text) {
+            intensity = abs(score)  // Convert score to intensity (0.0 to 1.0)
+        }
+        
+        return (label, intensity)
     }
 }
 // End of file

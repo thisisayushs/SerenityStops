@@ -26,6 +26,9 @@ struct ContentView: View {
     @StateObject private var viewModel = MapViewModel()
     @Environment(\.modelContext) private var modelContext
     
+    /// Added property for statistics sheet
+    @State private var showStatistics = false
+    
     // MARK: - Body
     
     var body: some View {
@@ -68,6 +71,22 @@ struct ContentView: View {
                     }
                     Spacer()
                 }
+                
+                // Add statistics button at the bottom
+                VStack {
+                    Spacer()
+                    HStack {
+                        Spacer()
+                        Button(action: { showStatistics = true }) {
+                            Image(systemName: "chart.bar.fill")
+                                .font(.title2)
+                                .padding()
+                                .background(.ultraThinMaterial)
+                                .clipShape(Circle())
+                                .padding()
+                        }
+                    }
+                }
             }
             // MARK: - Gesture Handlers
             .onTapGesture { screenCoord in
@@ -100,6 +119,22 @@ struct ContentView: View {
                 Button("Cancel", role: .cancel) {}
             } message: {
                 Text(viewModel.alertMessage)
+            }
+            // Add statistics sheet
+            .sheet(isPresented: $showStatistics) {
+                StatisticsView(
+                    moodSummary: viewModel.moodSummary,
+                    recentMoods: viewModel.recentMoods,
+                    mostFrequentMood: viewModel.mostFrequentMood
+                )
+                .presentationDragIndicator(.visible)
+                .toolbar {
+                    ToolbarItem(placement: .topBarTrailing) {
+                        Button("Done") {
+                            showStatistics = false
+                        }
+                    }
+                }
             }
         }
         // MARK: - Lifecycle Methods

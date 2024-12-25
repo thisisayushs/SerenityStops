@@ -27,6 +27,11 @@ class MapViewModel: NSObject, ObservableObject, CLLocationManagerDelegate {
     
     @Published var authorizationStatus: CLAuthorizationStatus = .notDetermined
     
+    /// Added properties for statistics
+    @Published var moodSummary: [String: Int] = [:]  // Counts of each mood type
+    @Published var mostFrequentMood: String = ""     // Most common mood
+    @Published var recentMoods: [LocationAnnotation] = []  // Recent mood entries
+    
     // MARK: - Private Properties
     private let locationManager: CLLocationManager
     private let feedbackGenerator = UINotificationFeedbackGenerator()
@@ -65,8 +70,13 @@ class MapViewModel: NSObject, ObservableObject, CLLocationManagerDelegate {
             let descriptor = FetchDescriptor<LocationStore>()
             let storedLocations = try context.fetch(descriptor)
             annotations = storedLocations.map { store in
-                LocationAnnotation(coordinate: store.coordinate, label: store.label)
+                LocationAnnotation(
+                    coordinate: store.coordinate,
+                    label: store.label,
+                    createdAt: store.createdAt
+                )
             }
+            updateMoodStatistics()
         } catch {
             print("Error loading locations: \(error)")
         }
@@ -133,7 +143,12 @@ class MapViewModel: NSObject, ObservableObject, CLLocationManagerDelegate {
     ///   - coordinate: The location coordinate
     ///   - label: The sentiment label for the annotation
     func addAnnotation(_ coordinate: CLLocationCoordinate2D, label: String) {
-        let annotation = LocationAnnotation(coordinate: coordinate, label: label)
+        let timestamp = Date()
+        let annotation = LocationAnnotation(
+            coordinate: coordinate,
+            label: label,
+            createdAt: timestamp
+        )
         annotations.append(annotation)
         
         // Persist to SwiftData
@@ -143,6 +158,7 @@ class MapViewModel: NSObject, ObservableObject, CLLocationManagerDelegate {
         
         do {
             try context.save()
+            updateMoodStatistics()  // Update statistics after successful save
         } catch {
             print("Error saving location: \(error)")
         }
@@ -195,6 +211,7 @@ class MapViewModel: NSObject, ObservableObject, CLLocationManagerDelegate {
             
             try context.save()
             feedbackGenerator.notificationOccurred(.success)
+            updateMoodStatistics()
         } catch {
             print("Error deleting location: \(error)")
             feedbackGenerator.notificationOccurred(.error)
@@ -214,5 +231,24 @@ class MapViewModel: NSObject, ObservableObject, CLLocationManagerDelegate {
                 pitch: 60       // Tilt the view for better perspective
             ))
         }
+    }
+    
+    /// Updates mood statistics based on current annotations
+    private func updateMoodStatistics() {
+        // Reset statistics
+        moodSummary.removeAll()
+        
+        // Count occurrences of each mood
+        for annotation in annotations {
+            moodSummary[annotation.label, default: 0] += 1
+        }
+        
+        // Find most frequent mood
+        if let mostCommon = moodSummary.max(by: { $0.value < $1.value }) {
+            mostFrequentMood = mostCommon.key
+        }
+        
+        // Get recent moods (last 5 entries)
+        recentMoods = Array(annotations.sorted { $0.createdAt > $1.createdAt }.prefix(5))
     }
 }

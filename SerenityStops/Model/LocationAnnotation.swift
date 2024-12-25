@@ -18,11 +18,18 @@ import MapKit
 struct LocationAnnotation: Identifiable {
     
     /// Unique identifier for the annotation
-    let id = UUID()
+    var id = UUID()
     /// The geographic coordinates of the annotation
     let coordinate: CLLocationCoordinate2D
     /// The sentiment label associated with this location
     let label: String
+    /// Timestamp when the annotation was created
+    let createdAt: Date
+    
+    init(coordinate: CLLocationCoordinate2D, label: String, createdAt: Date = Date()) {
+        self.id = UUID()
+        self.coordinate = coordinate
+        self.label = label
+        self.createdAt = createdAt
+    }
 }
-// End of file
-
