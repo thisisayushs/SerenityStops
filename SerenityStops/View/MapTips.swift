@@ -5,7 +5,6 @@
 //  Created by Ayush Kumar Singh on 17/12/24.
 //
 
-
 import SwiftUI
 import TipKit
 
@@ -21,12 +20,21 @@ struct MapTapTip: Tip {
     
     /// The main title of the tip
     var title: Text {
-        Text("Tap on the map")
+        Text("Start Your Journey")
+            .foregroundStyle(.primary)
+            .font(.headline)
     }
     
     /// Additional explanatory message for the tip
     var message: Text? {
-        Text("Tap anywhere on the map to share how you felt at that location")
+        Text("Tap anywhere on the map to mark a location and share how you felt there")
+            .foregroundStyle(.secondary)
+            .font(.body)
+    }
+    
+    var image: Image? {
+        Image(systemName: "hand.tap")
+            .resizable()
         
     }
 }
@@ -38,12 +46,22 @@ struct DeleteAnnotationTip: Tip {
     
     /// The main title of the tip
     var title: Text {
-        Text("Delete Annotations")
+        Text("Managing Your Markers")
+            .foregroundStyle(.primary)
+            .font(.headline)
     }
     
     /// Additional explanatory message for the tip
     var message: Text? {
-        Text("Press and hold any annotation to delete it")
+        Text("Press and hold any marker to reveal deletion options")
+            .foregroundStyle(.secondary)
+            .font(.body)
+    }
+    
+    var image: Image? {
+        Image(systemName: "trash")
+            .resizable()
+            
     }
     
     /// Rules for when this tip should be displayed
