@@ -1,5 +1,6 @@
 import SwiftUI
 import MapKit
+import SwiftData
 
 /// ViewModel class that manages map-related functionality and location services.
 /// Conforms to CLLocationManagerDelegate to handle location updates and permissions.
@@ -22,6 +23,7 @@ class MapViewModel: NSObject, ObservableObject, CLLocationManagerDelegate {
     // MARK: - Private Properties
     private let locationManager: CLLocationManager
     private let feedbackGenerator = UINotificationFeedbackGenerator()
+    private var modelContext: ModelContext?
     
     // MARK: - Initialization
     override init() {
@@ -36,6 +38,30 @@ class MapViewModel: NSObject, ObservableObject, CLLocationManagerDelegate {
         super.init()
         
         locationManager.delegate = self
+    }
+    
+    // MARK: - SwiftData Methods
+    
+    /// Sets up the SwiftData model context
+    /// - Parameter context: The SwiftData model context
+    func setModelContext(_ context: ModelContext) {
+        self.modelContext = context
+        loadStoredLocations()
+    }
+    
+    /// Loads stored locations from SwiftData
+    private func loadStoredLocations() {
+        guard let context = modelContext else { return }
+        
+        do {
+            let descriptor = FetchDescriptor<LocationStore>()
+            let storedLocations = try context.fetch(descriptor)
+            annotations = storedLocations.map { store in
+                LocationAnnotation(coordinate: store.coordinate, label: store.label)
+            }
+        } catch {
+            print("Error loading locations: \(error)")
+        }
     }
     
     // MARK: - Location Permission Methods
@@ -74,13 +100,24 @@ class MapViewModel: NSObject, ObservableObject, CLLocationManagerDelegate {
     }
     // MARK: - Annotation Methods
     
-    /// Adds a new annotation to the map
+    /// Adds a new annotation to the map and persists it
     /// - Parameters:
     ///   - coordinate: The location coordinate
     ///   - label: The sentiment label for the annotation
-    ///
     func addAnnotation(_ coordinate: CLLocationCoordinate2D, label: String) {
-        annotations.append(LocationAnnotation(coordinate: coordinate, label: label))
+        let annotation = LocationAnnotation(coordinate: coordinate, label: label)
+        annotations.append(annotation)
+        
+        // Persist to SwiftData
+        guard let context = modelContext else { return }
+        let locationStore = LocationStore(coordinate: coordinate, label: label)
+        context.insert(locationStore)
+        
+        do {
+            try context.save()
+        } catch {
+            print("Error saving location: \(error)")
+        }
     }
     
     /// Handles tap events on the map
@@ -103,4 +140,3 @@ class MapViewModel: NSObject, ObservableObject, CLLocationManagerDelegate {
             
     }
 }
-// End of file

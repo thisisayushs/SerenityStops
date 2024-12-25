@@ -7,6 +7,7 @@
 import SwiftUI
 import MapKit
 import TipKit
+import SwiftData
 
 /// Global analyzer instance for sentiment analysis
 
@@ -23,6 +24,7 @@ struct ContentView: View {
     
     /// View model that handles map-related logic and state
     @StateObject private var viewModel = MapViewModel()
+    @Environment(\.modelContext) private var modelContext
     
     // MARK: - Body
     
@@ -88,6 +90,7 @@ struct ContentView: View {
         }
         
         .onAppear {
+            viewModel.setModelContext(modelContext)
             viewModel.requestLocationPermission()
         }
     }
@@ -96,6 +99,5 @@ struct ContentView: View {
 
 #Preview {
     ContentView()
+        .modelContainer(for: LocationStore.self)
 }
-
-// End of file
