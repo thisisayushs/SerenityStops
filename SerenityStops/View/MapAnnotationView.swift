@@ -35,9 +35,11 @@ struct MapAnnotationView: View {
     
     var body: some View {
         
-        
-        annotationLabel
-            .transition(.scale.combined(with: .opacity))
+        Button(action: onTap) {
+            annotationLabel
+                .transition(.scale.combined(with: .opacity))
+        }
+        .buttonStyle(.plain)
         
     }
     
@@ -59,7 +61,6 @@ struct MapAnnotationView: View {
                 x: 0,
                 y: 2
             )
-            .onTapGesture(perform: onTap)
             .contextMenu {
                 deleteButton
             }

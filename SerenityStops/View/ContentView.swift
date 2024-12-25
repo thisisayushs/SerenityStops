@@ -48,9 +48,15 @@ struct ContentView: View {
                         annotation: annotation,
                         index: index,
                         onDelete: { viewModel.deleteAnnotation(at: index) },
-                        onTap: { viewModel.zoomToLocation(annotation.coordinate) }
+                        onTap: {
+                            // Add haptic feedback for better user experience
+                            let impact = UIImpactFeedbackGenerator(style: .light)
+                            impact.impactOccurred()
+                            viewModel.zoomToLocation(annotation.coordinate)
+                        }
                     )
                 }
+                .annotationTitles(.hidden)
             }
         }
         .mapStyle(.standard(elevation: .realistic))
