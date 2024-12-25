@@ -23,6 +23,8 @@ struct MapAnnotationView: View {
     let index: Int
     /// Callback triggered when the annotation is deleted
     var onDelete: () -> Void
+    /// Callback triggered when the annotation is tapped
+    var onTap: () -> Void
     
     var body: some View {
         
@@ -34,6 +36,9 @@ struct MapAnnotationView: View {
             .background(RoundedRectangle(cornerRadius: 20).fill(Color.accentColor))
             .foregroundColor(.black.opacity(0.7))
             .shadow(color: .black.opacity(0.15), radius: 5, x: 0, y: 2)
+            .onTapGesture {
+                onTap()
+            }
             .contextMenu {
                 Button(role: .destructive) {
                     onDelete()

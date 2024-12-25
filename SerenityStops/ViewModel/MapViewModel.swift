@@ -200,4 +200,19 @@ class MapViewModel: NSObject, ObservableObject, CLLocationManagerDelegate {
             feedbackGenerator.notificationOccurred(.error)
         }
     }
+    
+    // MARK: - Added Methods
+    
+    /// Zooms the map to a specific coordinate with animation
+    /// - Parameter coordinate: The coordinate to zoom to
+    func zoomToLocation(_ coordinate: CLLocationCoordinate2D) {
+        withAnimation(.easeInOut(duration: 0.5)) {
+            position = .camera(MapCamera(
+                centerCoordinate: coordinate,
+                distance: 500,  // Sets zoom level - lower number = closer zoom
+                heading: 0,     // Keep default heading
+                pitch: 60       // Tilt the view for better perspective
+            ))
+        }
+    }
 }

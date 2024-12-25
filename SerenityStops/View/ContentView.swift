@@ -40,7 +40,8 @@ struct ContentView: View {
                             MapAnnotationView(
                                 annotation: annotation,
                                 index: index,
-                                onDelete: { viewModel.deleteAnnotation(at: index) }
+                                onDelete: { viewModel.deleteAnnotation(at: index) },
+                                onTap: { viewModel.zoomToLocation(annotation.coordinate) }
                             )
                         }
                     }
