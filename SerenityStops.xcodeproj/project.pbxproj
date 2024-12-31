@@ -271,7 +271,7 @@
 				INFOPLIST_FILE = SerenityStops/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "Serenity Stops";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.lifestyle";
-				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Serenity Stops would like to use your location to center the map where you are.";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Turning on location services allows Serenity Stops to center the map on your current position, making location-based journaling easier.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -309,7 +309,7 @@
 				INFOPLIST_FILE = SerenityStops/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "Serenity Stops";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.lifestyle";
-				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Serenity Stops would like to use your location to center the map where you are.";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Turning on location services allows Serenity Stops to center the map on your current position, making location-based journaling easier.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
