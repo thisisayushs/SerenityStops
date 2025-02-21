@@ -35,6 +35,8 @@ It all started with finding and deconstructing apps on the App Store to understa
 
 **🌙 Light & Dark Mode:** Beautiful interface tailored for each mode.
 
+**📊 Information rich stats about your mood based on locations.
+
 ## Technologies Used
 
 **SwiftUI:** Modern interface development for Apple Platforms.
@@ -42,6 +44,8 @@ It all started with finding and deconstructing apps on the App Store to understa
 **MapKit:** Displays serene stops on a map.
 	
 **Natural Language Framework:** AI-powered mood analysis.
+
+**SwiftCharts:** Communicates the most important information to the user about their moods.
 
 ## Installation
 
