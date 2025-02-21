@@ -35,7 +35,7 @@ It all started with finding and deconstructing apps on the App Store to understa
 
 **🌙 Light & Dark Mode:** Beautiful interface tailored for each mode.
 
-**📊 Information rich stats about your mood based on locations.
+**📊 Information rich stats** Information about your mood based on locations.
 
 ## Technologies Used
 
@@ -45,7 +45,7 @@ It all started with finding and deconstructing apps on the App Store to understa
 	
 **Natural Language Framework:** AI-powered mood analysis.
 
-**SwiftCharts:** Communicates the most important information to the user about their moods.
+**SwiftCharts:** Communicates the most important information about your moods.
 
 ## Installation
 
