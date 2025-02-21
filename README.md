@@ -35,7 +35,7 @@ It all started with finding and deconstructing apps on the App Store to understa
 
 **🌙 Light & Dark Mode:** Beautiful interface tailored for each mode.
 
-**📊 Information rich stats** Information about your mood based on locations.
+**📊 Information rich stats:** Information about your mood based on locations.
 
 ## Technologies Used
 
