@@ -47,6 +47,12 @@ It all started with finding and deconstructing apps on the App Store to understa
 
 **SwiftCharts:** Communicates the most important information about your moods.
 
+## Installation
+
+1. Clone this repository: `git clone https://github.com/thisisayushs/SerenityStops.git)`
+2. Open the project in Xcode.
+3. Run the app on a simulator or connected device.
+
 ## Available on the App Store
 
 https://apps.apple.com/us/app/serenity-stops/id6739853106
