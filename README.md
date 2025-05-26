@@ -57,10 +57,6 @@ It all started with finding and deconstructing apps on the App Store to understa
 2. Open the project in Xcode.
 3. Run the app on a simulator or connected device.
 
-## Available on the App Store
-
-https://apps.apple.com/us/app/serenity-stops/id6739853106
-
 ## License
 
 This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
