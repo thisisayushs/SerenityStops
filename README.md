@@ -3,6 +3,10 @@ Serenity Stops 🌿 is a mood-based journaling app that helps users reflect on t
 
 ![App Screenshot](screenshots/Content@3x.png)
 
+## Available on the App Store
+
+App Store Link - https://apps.apple.com/us/app/serenity-stops/id6739853106
+
 ## App Deconstruction
 
 It all started with finding and deconstructing apps on the App Store to understand what makes them unique and impactful. Two standout inspirations for Serenity Stops were **Apple Maps** and **Dot**, which shaped the app’s core functionality and design philosophy.
